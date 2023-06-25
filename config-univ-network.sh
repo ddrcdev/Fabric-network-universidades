@@ -115,7 +115,7 @@ export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/madrid.universidad
 export CORE_PEER_LOCALMSPID="MadridMSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MADRID_CA
 export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp
-export CORE_PEER_ADDRESS=localhost:7051
+export CORE_PEER_ADDRESS=localhost:8051
 peer channel join -b ./channel-artifacts/universidadeschannel.block
 
 #Adición de nodo - Univ.Bogota
@@ -141,6 +141,8 @@ export FABRIC_CFG_PATH=${PWD}/../config
 
 #Configuración nodo Univ.Berlin
 cd berlin/
+
+#Importamos config en formato json
 export FABRIC_CFG_PATH=$PWD
 ../../bin/configtxgen -printOrg BerlinMSP > ../organizations/peerOrganizations/berlin.universidades.com/berlin.json
 
@@ -158,7 +160,7 @@ export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/madrid.universidad
 export CORE_PEER_LOCALMSPID="MadridMSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MADRID_CA
 export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp
-export CORE_PEER_ADDRESS=localhost:7051
+export CORE_PEER_ADDRESS=localhost:8051
 peer channel fetch config channel-artifacts/config_block.pb -o localhost:7050 --ordererTLSHostnameOverride orderer.universidades.com -c universidadeschannel --tls --cafile ${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/msp/tlscacerts/tlsca.universidades.com-cert.pem
 
 
