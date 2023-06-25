@@ -2,6 +2,14 @@
 ########## REQUISITOS PREVIOS #########
 #######################################
 
+sudo rm -rf fabric-universidades-iebs
+#Reinicio de contenedores
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker volume prune
+docker network prune
+
+
 #Comprobación de versiones
 git version
 curl version
@@ -124,6 +132,10 @@ peer channel join -b ./channel-artifacts/universidadeschannel.block
 
 #Generación certificados Univ.Berlin (tercer nodo)
 
+#Configuración nodo Univ.Berlin
+export PATH=${PWD}/../bin:${PWD}:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config
+. ./organizations/fabric-ca/registerEnroll.sh && createUniversity "berlin" "2054"
 
 #Configuración nodo Univ.Berlin
 cd berlin/
@@ -133,6 +145,7 @@ export FABRIC_CFG_PATH=$PWD
 #Levantamos nodo Univ.Berlin
 cd ..
 docker-compose -f docker/docker-compose-berlin.yaml up -d
+
 
 #Firma de la actualización con credenciales de Univ.Madrid
 #Obtenemos configuración del bloque génesis
