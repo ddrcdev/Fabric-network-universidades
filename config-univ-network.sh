@@ -34,12 +34,11 @@ sudo usermod -aG docker $USER
 #Clonación de repositorio
 git clone https://github.com/ddrcdev/fabric-universidades-iebs
 
+#Privilegios en la carpeta /bin
+sudo chmod -R +x fabric-universidades-iebs
+
 #Instalación en repositorio github
 cd fabric-universidades-iebs/universidades
-
-#Privilegios en la carpeta /bin
-sudo chmod -R +x ../bin
-
 
 
 #######################################
@@ -66,6 +65,9 @@ mkdir channel-artifacts
 #Levantamos clienta CA de nodos
 docker-compose -f docker/docker-compose-ca.yaml up -d
 
+#Privilegios en la carpeta /fabric-ca
+sudo chmod -R +x organizations/fabric-ca
+
 
 ########################################
 ###### GENERACIÓN DE CREDENCIALES ######
@@ -77,10 +79,12 @@ export FABRIC_CFG_PATH=${PWD}/../config
 . ./organizations/fabric-ca/registerEnroll.sh && createUniversity "bogota" "9054"
 . ./organizations/fabric-ca/registerEnroll.sh && createOrderer 
 
+sudo chmod -R +x organizations/peerOrganizations
+sudo chmod -R +x organizations/ordererOrganizations
+sudo chmod -R +x organizations/fabric-ca
 
 #Despliegue de red con canales 1 y 2 
 docker-compose -f docker/docker-compose-universidades.yaml up -d
-
 
 #######################################
 ##### CANAL: universidadeschannel #####
@@ -88,11 +92,11 @@ docker-compose -f docker/docker-compose-universidades.yaml up -d
 
 export FABRIC_CFG_PATH=${PWD}/configtx
 configtxgen -profile UniversidadesGenesis -outputBlock ./channel-artifacts/universidadeschannel.block -channelID universidadeschannel
+
 export FABRIC_CFG_PATH=${PWD}/../config
 export ORDERER_CA=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/msp/tlscacerts/tlsca.universidades.com-cert.pem
 export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.crt
 export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/organizations/ordererOrganizations/universidades.com/orderers/orderer.universidades.com/tls/server.key
-
 osnadmin channel join --channelID universidadeschannel --config-block ./channel-artifacts/universidadeschannel.block -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 osnadmin channel list -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
