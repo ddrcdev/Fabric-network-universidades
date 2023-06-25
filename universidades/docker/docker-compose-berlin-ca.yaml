@@ -1,0 +1,28 @@
+version: '3.7'
+
+networks:
+  test:
+    name: universidades_network
+
+services:
+
+  ca_berlin:
+    image: hyperledger/fabric-ca:1.5.2
+    labels:
+      service: hyperledger-fabric
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-berlin
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_PORT=2054
+      - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:2054
+    ports:
+      - "2054:2054"
+      - "2054:2054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    volumes:
+      - ../organizations/fabric-ca/berlin:/etc/hyperledger/fabric-ca-server
+    container_name: ca_berlin
+    networks:
+      - test
+
