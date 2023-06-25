@@ -131,6 +131,8 @@ peer channel join -b ./channel-artifacts/universidadeschannel.block
 #######################################
 
 #Generación certificados Univ.Berlin (tercer nodo)
+#Levantamos clienta CA de berlin
+docker-compose -f docker/docker-compose-berlin-ca.yaml up -d
 
 #Configuración nodo Univ.Berlin
 export PATH=${PWD}/../bin:${PWD}:$PATH
