@@ -24,17 +24,23 @@ sudo apt install golang-go
 #Instalación de Node.js
 sudo apt install npm
 
+#Instalación de jq - para archivos json 
+sudo apt install jq
+
 #Definición de privilegios de usuario - reiniciar consola para hacerlo efectivo
+sudo usermod -aG sudo $USER
 sudo usermod -aG docker $USER
 
 #Clonación de repositorio
-git clone https://gitlab.com/STorres17/soluciones-blockchain.git
+git clone https://github.com/ddrcdev/fabric-universidades-iebs
 
 #Instalación en repositorio github
-cd soluciones-blockchain/universidades
+cd fabric-universidades-iebs/universidades
 
-#Instalación de jq - para archivos json 
-sudo apt install jq
+#Privilegios en la carpeta /bin
+sudo chmod -R +x ../bin
+
+
 
 #######################################
 ###### ELIMINAR CONFIG. PREVIAS #######
@@ -47,8 +53,8 @@ docker volume prune
 docker network prune
 
 #Eliminar acreditaciones generadas
-rm -rf organizations/peerOrganizations
-rm -rf organizations/ordererOrganizations
+sudo rm -rf organizations/peerOrganizations
+sudo rm -rf organizations/ordererOrganizations
 sudo rm -rf organizations/fabric-ca/madrid/
 sudo rm -rf organizations/fabric-ca/bogota/
 sudo rm -rf organizations/fabric-ca/ordererOrg/
@@ -57,6 +63,7 @@ rm -rf channel-artifacts/
 #Creación de carpeta para generación de nuevas acreditaciones
 mkdir channel-artifacts
 
+#Levantamos clienta CA de nodos
 docker-compose -f docker/docker-compose-ca.yaml up -d
 
 
@@ -64,9 +71,11 @@ docker-compose -f docker/docker-compose-ca.yaml up -d
 ###### GENERACIÓN DE CREDENCIALES ######
 ########################################
 
-. ./organizations/fabric-ca/registerEnroll.sh && createMadrid
-. ./organizations/fabric-ca/registerEnroll.sh && createBogota
-. ./organizations/fabric-ca/registerEnroll.sh && createOrderer
+export PATH=${PWD}/../bin:${PWD}:$PATH
+export FABRIC_CFG_PATH=${PWD}/../config
+. ./organizations/fabric-ca/registerEnroll.sh && createUniversity "madrid" "8054"
+. ./organizations/fabric-ca/registerEnroll.sh && createUniversity "bogota" "9054"
+. ./organizations/fabric-ca/registerEnroll.sh && createOrderer 
 
 
 #Despliegue de red con canales 1 y 2 
