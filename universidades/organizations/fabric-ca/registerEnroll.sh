@@ -12,21 +12,26 @@ function createUniversity() {
   set -x
   fabric-ca-client enroll -u https://admin:adminpw@localhost:${PORT} --caname ca-${NAME} --tls.certfiles "${PWD}/organizations/fabric-ca/${NAME}/tls-cert.pem"
   { set +x; } 2>/dev/null
-
-  echo 'NodeOUs:
+ 
+  aux_1="cacerts/localhost-"
+  aux_2="-ca"
+  aux_3=".pem"
+  cert_path="$aux1$PORT$aux2$NAME$aux3"
+  
+  echo "NodeOUs:
   Enable: true
   ClientOUIdentifier:
-    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
+    Certificate: "${cert_path}"
     OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
-    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
+    Certificate: "${cert_path}"
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
-    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
+    Certificate: "${cert_path}"
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
-    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
-    OrganizationalUnitIdentifier: orderer' > "${PWD}/organizations/peerOrganizations/${NAME}.universidades.com/msp/config.yaml"
+    Certificate: "${cert_path}"
+    OrganizationalUnitIdentifier: orderer" > "${PWD}/organizations/peerOrganizations/${NAME}.universidades.com/msp/config.yaml"
 
   infoln "Registering peer0"
   set -x
