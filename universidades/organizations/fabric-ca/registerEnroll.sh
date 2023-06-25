@@ -16,16 +16,16 @@ function createUniversity() {
   echo 'NodeOUs:
   Enable: true
   ClientOUIdentifier:
-    Certificate: cacerts/localhost-${PORT}-ca-${NAME}.pem
+    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
     OrganizationalUnitIdentifier: client
   PeerOUIdentifier:
-    Certificate: cacerts/localhost-${PORT}-ca-${NAME}.pem
+    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
     OrganizationalUnitIdentifier: peer
   AdminOUIdentifier:
-    Certificate: cacerts/localhost-${PORT}-ca-${NAME}.pem
+    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
     OrganizationalUnitIdentifier: admin
   OrdererOUIdentifier:
-    Certificate: cacerts/localhost-${PORT}-ca-${NAME}.pem
+    Certificate: cacerts/localhost-\${PORT}-ca-\${NAME}.pem
     OrganizationalUnitIdentifier: orderer' > "${PWD}/organizations/peerOrganizations/${NAME}.universidades.com/msp/config.yaml"
 
   infoln "Registering peer0"
