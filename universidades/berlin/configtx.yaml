@@ -1,0 +1,22 @@
+---
+################################################################################
+#   Section: Organizations
+################################################################################
+Organizations:
+    - &Berlin
+        Name: BerlinMSP
+        ID: BerlinMSP
+        MSPDir: ../organizations/peerOrganizations/berlin.universidades.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('BerlinMSP.admin', 'BerlinMSP.peer', 'BerlinMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('BerlinMSP.admin', 'BerlinMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('BerlinMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('BerlinMSP.peer')"
