@@ -102,6 +102,7 @@ osnadmin channel list -o localhost:7053 --ca-file "$ORDERER_CA" --client-cert "$
 
 #Adición de nodo - Univ.Madrid
 export CORE_PEER_TLS_ENABLED=true
+export FABRIC_CFG_PATH=${PWD}/../config
 export PEER0_MADRID_CA=${PWD}/organizations/peerOrganizations/madrid.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt
 export CORE_PEER_LOCALMSPID="MadridMSP"
 export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_MADRID_CA
