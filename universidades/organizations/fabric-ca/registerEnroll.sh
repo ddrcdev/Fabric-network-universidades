@@ -3,9 +3,7 @@
 function createUniversity() {
   local NAME=$1  # Definir la variable NAME usando el primer argumento de la función
   local PORT=$2  # Definir la variable PORT usando el segundo argumento de la función
-
   
-
   infoln "Enrolling the CA admin"
   mkdir -p organizations/peerOrganizations/${NAME}.universidades.com/
 
