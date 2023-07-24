@@ -172,4 +172,4 @@ class adminStudent extends Contract {
     }
 }
 
-module.exports = StudentTransfer;
+module.exports = adminStudent;
