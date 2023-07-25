@@ -1,0 +1,48 @@
+{
+	"name": "universidades_network",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": true,
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "MadridMSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"universidadeschannel": {
+			"peers": {
+				"peer0.madrid.universidades.com": {}
+			}
+		}
+	},
+	"organizations": {
+		"MadridMSP": {
+			"mspid": "MadridMSP",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/peerOrganizations/madrid.universidades.com/users/User1@madrid.universidades.com/msp/keystore/priv_sk"
+			},
+			"peers": ["peer0.madrid.universidades.com"],
+			"signedCert": {
+				"path": "/tmp/crypto/peerOrganizations/madrid.universidades.com/users/User1@madrid.universidades.com/msp/signcerts/User1@madrid.universidades.com-cert.pem"
+			}
+		}
+	},
+	"peers": {
+		"peer0.madrid.universidades.com": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peerOrganizations/madrid.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt"
+			},
+			"url": "grpcs://peer0.madrid.universidades.com:7051"
+		}
+	}
+}
