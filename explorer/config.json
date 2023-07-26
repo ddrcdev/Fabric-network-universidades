@@ -1,9 +1,95 @@
+
 {
 	"network-configs": {
-		"universidades_network": {
-			"name": "universidades_network",
-			"profile": "./connection-profile/univ-network.json"
+	  "universidades_network": {
+		"version": "1.0",
+		"clients": {
+		  "client-1": {
+			"tlsEnable": true,
+			"organization": "MadridMSP",
+			"channel": "universidadeschannel",
+			"credentialStore": {
+			  "path": "./tmp/credentialStore_Madrid/credential",
+			  "cryptoStore": {
+				"path": "./tmp/credentialStore_Madrid/crypto"
+			  }
+			}
+		  }
+		},
+		"channels": {
+		  "universidadeschannel": {
+			"peers": {
+			  "peer0.madrid.universidades.com": {}
+			},
+			"connection": {
+			  "timeout": {
+				"peer": {
+				  "endorser": "6000",
+				  "eventHub": "6000",
+				  "eventReg": "6000"
+				}
+			  }
+			}
+		  }
+		},
+		"organizations": {
+		  "MadridMSP": {
+			"mspid": "MadridMSP",
+			"adminPrivateKey": {
+			  "path":
+				"/tmp/crypto/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp/keystore"
+			},
+			"signedCert": {
+			  "path":
+				"/tmp/crypto/peerOrganizations/madrid.universidades.com/users/Admin@madrid.universidades.com/msp/signcerts"
+			}
+		  },
+		  "BogotaMSP": {
+			"mspid": "BogotaMSP",
+			"adminPrivateKey": {
+			  "path":
+				"/tmp/crypto/peerOrganizations/bogota.universidades.com/users/Admin@bogota.universidades.com/msp/keystore"
+			}
+		  },
+		  "OrdererMSP": {
+			"mspid": "OrdererMSP",
+			"adminPrivateKey": {
+			  "path":
+				"/tmp/crypto/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore"
+			}
+		  }
+		},
+		"peers": {
+		  "peer0.madrid.universidades.com": {
+			"tlsCACerts": {
+			  "path":
+				"/tmp/crypto/peerOrganizations/madrid.universidades.com/peers/peer0.madrid.universidades.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:7051",
+			"eventUrl": "grpcs://localhost:7053",
+			"grpcOptions": {
+			  "ssl-target-name-override": "peer0.madrid.universidades.com"
+			}
+		  },
+		  "peer0.bogota.universidades.com": {
+			"tlsCACerts": {
+			  "path":
+				"/tmp/crypto/peerOrganizations/bogota.universidades.com/peers/peer0.bogota.universidades.com/tls/ca.crt"
+			},
+			"url": "grpcs://localhost:9051",
+			"eventUrl": "grpcs://localhost:9053",
+			"grpcOptions": {
+			  "ssl-target-name-override": "peer0.bogota.universidades.com"
+			}
+		  }
+		},
+		"orderers": {
+		  "orderer.example.com": {
+			"url": "grpcs://localhost:7050"
+		  }
 		}
+	  }
 	},
+	"configtxgenToolPath": "/fabric-universidades-iebs/bin",
 	"license": "Apache-2.0"
-}
+  }

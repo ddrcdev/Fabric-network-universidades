@@ -46,8 +46,8 @@ services:
       - DISCOVERY_AS_LOCALHOST=false
       - PORT=${PORT:-8080}
     volumes:
-      - .config.json:/opt/explorer/app/platform/fabric/config.json
-      - .connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - .config.json:/opt/explorer/app/platform/explorer/config.json
+      - .connection-profile:/opt/explorer/app/platform/explorer/connection-profile
       - . ../organizations:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
